@@ -1,0 +1,276 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Pokemon API",
+    "summary": "Permet d'aller chercher des informations sur les pokemons",
+    "description": "Grace a une connexion a la bd, on peut aller chercher des informations sur les pokemons",
+    "contact": {
+      "name": "API Support",
+      "url": "https://www.example.com/support",
+      "email": "support@example.com"
+    },
+    "version": "1.0.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000/",
+      "description": "Serveur de développement"
+    }
+  ],
+  "paths": {
+    "/api/pokemons/liste": {
+      "get": {
+        "description": "Retourne la liste de toutes les pokemons",
+        "summary": "Liste des pokemons",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Liste des pokemons",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/pokemon"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Pokemon non trouvé"
+          },
+          "500": {
+            "description": "Erreur serveur"
+          }
+        }
+      }
+    },
+    "/api/pokemons/{id}": {
+      "get": {
+        "description": "Retourne un pokemon",
+        "summary": "Retourne un pokemon",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pokemon trouvé",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/pokemon"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Pokemon non trouvé"
+          },
+          "500": {
+            "description": "Erreur serveur"
+          }
+        }
+      },
+      "delete": {
+        "description": "Supprime un pokemon",
+        "summary": "Suppression d'un pokemon",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pokemon supprimé",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/pokemon"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Pokemon non trouvé"
+          },
+          "500": {
+            "description": "Erreur serveur"
+          }
+        }
+      },
+      "put": {
+        "description": "Modifie un pokemon",
+        "summary": "Modification d'un pokemon",
+        "parameters": [
+          {
+            "name": "Pokemon",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "nom_pokemon": {
+                  "type": "string"
+                },
+                "type_primaire": {
+                  "type": "string"
+                },
+                "type_secondaire": {
+                  "type": "string"
+                },
+                "pv": {
+                  "type": "integer"
+                },
+                "attaque": {
+                  "type": "integer"
+                },
+                "defense": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pokemon modifié",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/pokemon"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Pokemon non trouvé"
+          },
+          "500": {
+            "description": "Erreur serveur"
+          }
+        }
+      },
+      "post": {
+        "description": "Ajoute un pokemon",
+        "summary": "Ajout d'un pokeomon",
+        "parameters": [
+          {
+            "name": "Pokemon",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "nom_pokemon": {
+                  "type": "string"
+                },
+                "type_primaire": {
+                  "type": "string"
+                },
+                "type_secondaire": {
+                  "type": "string"
+                },
+                "pv": {
+                  "type": "integer"
+                },
+                "attaque": {
+                  "type": "integer"
+                },
+                "defense": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pokemon ajouté",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/pokemon"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Pokemon non trouvé"
+          },
+          "500": {
+            "description": "Erreur serveur"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "pokemon": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "nom_pokemon": {
+            "type": "string"
+          },
+          "type_primaire": {
+            "type": "string"
+          },
+          "type_secondaire": {
+            "type": "string"
+          },
+          "pv": {
+            "type": "integer"
+          },
+          "attaque": {
+            "type": "integer"
+          },
+          "defense": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }
+}
