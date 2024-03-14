@@ -5,7 +5,7 @@ const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const app = express();
 dotenv.config();
-const port = process.env.PORT;
+const port = 3000;
 const routes = require("./src/routes/pokemon");
 const swaggerDocument = require("./src/config/documentation.json");
 
@@ -18,10 +18,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 app.use('/api/pokemons', routes);
-
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));
-
-app.use('/api/utilisateurs', require('./src/routes/utilisateurs'));
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

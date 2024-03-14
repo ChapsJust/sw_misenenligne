@@ -15,10 +15,10 @@ const getPokemonById = async (req, res) => {
 
 const getAllPokemons = async (req, res) => {
   try {
-    const page = req.query.page || 1;
+    const page = parseInt(req.query.page, 10) || 1;
     const type = req.query.type || '';
-    const pokemons = await pokemonModel.getAllPokemons(page, type);
-    // NOTE : La logique du code devrait être ici
+    const pokemons = await pokemonModel.getAllPokemons(page, type.toLowerCase());
+
     res.status(200).json(pokemons);
   } catch (error) {
     console.error(error);

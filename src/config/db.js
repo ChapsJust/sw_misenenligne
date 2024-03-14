@@ -1,13 +1,15 @@
-const mysql = require("mysql");
+const pg = require("pg");
 const dotenv = require("dotenv");
 dotenv.config();
 
-const db = mysql.createPool({
-    connectionLimit: process.env.MYSQL_CONNECTION_LIMIT,
-    host: process.env.MYSQL_HOST,
-    user: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DATABASE
+const db = new pg.Client({
+    user: process.env.PG_USER,
+    host: process.env.PG_HOST,
+    database: process.env.PG_DATABASE,
+    password: process.env.PG_PASSWORD,
+    port: process.env.PG_PORT,
 });
+
+db.connect();
 
 module.exports = db;
