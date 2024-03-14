@@ -5,8 +5,19 @@ const getPokemonById = async (req, res) => {
   try {
     const id = req.params.id;
     const pokemon = await pokemonModel.getPokemonById(id);
-    res.status(200).json(pokemon);
-    // Note : Erreur 404 si le pokemon n'existe pas
+
+    if (pokemon.length === 0) {
+      return res.status(404).json({ erreur: `Aucun pokemon trouvé avec l'id ${req.params.id}` });
+    }
+
+    res.status(200).json({
+      message: `Pokemon trouvé avec succès`,
+      resultat : {
+      id: pokemon[0].id,
+      nom: pokemon[0].nom,
+      type_primaire: pokemon[0].type_primaire
+      }  
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ erreur: `Echec lors de la récupération du pokemon avec l'id ${req.params.id}` });

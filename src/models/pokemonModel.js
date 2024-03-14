@@ -8,11 +8,7 @@ const getPokemonById = (id) => {
 
     pool.query(query, [id])
       .then(results => {
-        if (results.rows.length === 0) {
-          reject(new Error(`Le pokemon id ${id} n'existe pas dans la base de données`));
-        } else {
-          resolve(results.rows[0]);
-        }
+        resolve(results.rows);
       })
       .catch(error => {
         reject(error);
